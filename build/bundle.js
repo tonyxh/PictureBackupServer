@@ -36628,6 +36628,10 @@
 	    });
 	  },
 	
+	  onOpenClick: function onOpenClick() {
+	    this.refs.dropzone.open();
+	  },
+	
 	  render: function render() {
 	    var content = _react2['default'].createElement('div', null);
 	    if (this.state.files.length != 0) {
@@ -36661,6 +36665,11 @@
 	          null,
 	          'Try dropping some files here, or click to select files to upload.'
 	        )
+	      ),
+	      _react2['default'].createElement(
+	        'button',
+	        { type: 'button', onClick: this.onOpenClick },
+	        'Open Dropzone'
 	      ),
 	      _react2['default'].createElement(
 	        'div',

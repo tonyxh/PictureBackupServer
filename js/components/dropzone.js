@@ -13,6 +13,10 @@ var DropzoneComponent = React.createClass({
       });
     },
 
+    onOpenClick: function () {
+      this.refs.dropzone.open();
+    },
+
     render: function () {
       var content = <div />;
       if(this.state.files.length != 0){
@@ -26,6 +30,9 @@ var DropzoneComponent = React.createClass({
             <Dropzone ref="dropzone" onDrop={this.onDrop} >
               <div>Try dropping some files here, or click to select files to upload.</div>
             </Dropzone>
+            <button type="button" onClick={this.onOpenClick}>
+                Open Dropzone
+            </button>
             <div>{content}</div>
           </div>
       );
