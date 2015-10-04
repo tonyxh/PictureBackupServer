@@ -26,13 +26,13 @@ var NavbarInstance = React.createClass({
 			      <NavItem>Videos</NavItem>
 			    </Nav>
 			  </Navbar>
-			  <Col xs={6} md={4} />
-			  <Col xs={6} md={4}>
+			  <Col xs={4} md={4} />
+			  <Col xs={4} md={4}>
 				  <div>
 				    	{content}
 				  </div>
 			  </Col>
-			  <Col xs={6} md={4} />
+			  <Col xs={4} md={4} />
 		  </Grid>
 		</div>
 	  )
