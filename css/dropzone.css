@@ -1,0 +1,12 @@
+.btn-primary{
+	margin-left: 75px;
+}
+
+.dropzone{
+	margin: auto;
+	width: 200;
+    height: 200;
+    border-width: 2;
+    border-color: #099;
+    border-style: dashed;
+}

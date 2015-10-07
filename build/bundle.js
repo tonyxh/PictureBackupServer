@@ -36617,12 +36617,14 @@
 	
 	__webpack_require__(401);
 	
-	var _reactSpinner = __webpack_require__(403);
+	__webpack_require__(403);
+	
+	var _reactSpinner = __webpack_require__(405);
 	
 	var _reactSpinner2 = _interopRequireDefault(_reactSpinner);
 	
-	var Dropzone = __webpack_require__(404);
-	var request = __webpack_require__(406);
+	var Dropzone = __webpack_require__(406);
+	var request = __webpack_require__(408);
 	
 	var DropzoneComponent = _react2['default'].createClass({
 	  displayName: 'DropzoneComponent',
@@ -36632,14 +36634,14 @@
 	  },
 	
 	  onDrop: function onDrop(files) {
-	    var _this = this;
-	
 	    this.setState({ files: files, uploading: true, uploaded: false });
 	    var req = request.post('/upload');
-	    files.forEach((function (file) {
-	      req.attach(file.name, file).on('progress', (function (e) {
-	        console.log('Percentage done:', e.percent);
-	      }).bind(_this));
+	    files.forEach(function (file) {
+	      req.attach(file.name, file);
+	    });
+	    req.on('progress', (function (e) {
+	      this.setState({ finished: e.percent });
+	      console.log('Percentage done:', e.percent);
 	    }).bind(this));
 	    req.end((function () {
 	      console.log('uploaded');
@@ -36657,15 +36659,8 @@
 	
 	  render: function render() {
 	    var content = _react2['default'].createElement('div', null);
-	    // if(this.state.files.length != 0){
-	    //   content = <div>
-	    //             <h2>Uploaded {this.state.files.length} files...</h2>
-	    //             <div>{this.state.files.map((file) => <Thumbnail src={file.preview} />)}</div>
-	    //             </div>;
-	    // }
-	
 	    if (this.state.uploading === true) {
-	      content = _react2['default'].createElement(_reactSpinner2['default'], null);
+	      content = _react2['default'].createElement(_reactBootstrap.ProgressBar, { now: this.state.finished });
 	    }
 	    if (this.state.uploaded === true) {
 	      content = _react2['default'].createElement(
@@ -36676,7 +36671,7 @@
 	          null,
 	          'Uploaded ',
 	          this.state.files.length,
-	          ' files...'
+	          ' files!'
 	        ),
 	        _react2['default'].createElement(
 	          'div',
@@ -36692,7 +36687,7 @@
 	      null,
 	      _react2['default'].createElement(
 	        Dropzone,
-	        { ref: 'dropzone', onDrop: this.onDrop },
+	        { className: 'dropzone', ref: 'dropzone', onDrop: this.onDrop },
 	        _react2['default'].createElement(
 	          'div',
 	          null,
@@ -36700,18 +36695,22 @@
 	        )
 	      ),
 	      _react2['default'].createElement(
-	        _reactBootstrap.Button,
-	        { bsStyle: 'primary', bsSize: 'large', onClick: this.onOpenClick },
-	        'Open IMG'
-	      ),
-	      _react2['default'].createElement(
-	        _reactBootstrap.Button,
-	        { bsStyle: 'info', bsSize: 'large', onClick: this.onCleanClick },
-	        'Clean'
+	        'div',
+	        null,
+	        _react2['default'].createElement(
+	          _reactBootstrap.Button,
+	          { bsStyle: 'primary', bsSize: 'large', onClick: this.onOpenClick },
+	          'Open IMG'
+	        ),
+	        _react2['default'].createElement(
+	          _reactBootstrap.Button,
+	          { bsStyle: 'info', bsSize: 'large', onClick: this.onCleanClick },
+	          'Clean'
+	        )
 	      ),
 	      _react2['default'].createElement(
 	        'div',
-	        null,
+	        { margin: 'auto' },
 	        content
 	      )
 	    );
@@ -36805,6 +36804,46 @@
 /* 403 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(404);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(166)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./dropzone.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./dropzone.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 404 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(160)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".btn-primary{\n\tmargin-left: 75px;\n}\n\n.dropzone{\n\tmargin: auto;\n\twidth: 200;\n    height: 200;\n    border-width: 2;\n    border-color: #099;\n    border-style: dashed;\n}", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 405 */
+/***/ function(module, exports, __webpack_require__) {
+
 	(function(window, React) {
 	  var Spinner = React.createClass({displayName: 'Spinner',
 	    render: function() {
@@ -36841,7 +36880,7 @@
 
 
 /***/ },
-/* 404 */
+/* 406 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36849,7 +36888,7 @@
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var React = __webpack_require__(1);
-	var accept = __webpack_require__(405);
+	var accept = __webpack_require__(407);
 	
 	var Dropzone = React.createClass({
 	  displayName: 'Dropzone',
@@ -37039,7 +37078,7 @@
 
 
 /***/ },
-/* 405 */
+/* 407 */
 /***/ function(module, exports) {
 
 	/**
@@ -37086,15 +37125,15 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 406 */
+/* 408 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var Emitter = __webpack_require__(407);
-	var reduce = __webpack_require__(408);
+	var Emitter = __webpack_require__(409);
+	var reduce = __webpack_require__(410);
 	
 	/**
 	 * Root reference for iframes.
@@ -38249,7 +38288,7 @@
 
 
 /***/ },
-/* 407 */
+/* 409 */
 /***/ function(module, exports) {
 
 	
@@ -38419,7 +38458,7 @@
 
 
 /***/ },
-/* 408 */
+/* 410 */
 /***/ function(module, exports) {
 
 	
